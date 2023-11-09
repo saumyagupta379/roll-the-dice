@@ -22,7 +22,8 @@
     winnerName:'',
     player1bg: 'bg-green-700',
     player2bg: 'bg-green-500',
-    diceImg: 'dice-six-faces-six.png',
+    diceImg1: 'dice-six-faces-six.png',
+    diceImg2: 'dice-six-faces-six.png',
     isPlayer1GameStarted: false,
     isPlayer2GameStarted: false,
     currentPlayer: 1,
@@ -36,7 +37,8 @@
         this.player1bg = 'bg-green-700'
         this.player2bg = 'bg-green-500'
         this.disable = true
-        this.diceImg = 'dice-six-faces-six.png'
+        this.diceImg1 = 'dice-six-faces-six.png'
+        this.diceImg2 = 'dice-six-faces-six.png'
         this.isPlayer1GameStarted = false
         this.isPlayer2GameStarted = false
         this.currentPlayer = 1
@@ -52,35 +54,64 @@
     },
 
     rollDice(){
+        if(this.currentPlayer === 1)
+        {
         rand = Math.floor(Math.random() *(6 - 1 + 1) + 1);
-        this.diceImg = 'dice-1-dice.gif';
+        this.diceImg1 = 'dice-1-dice.gif';
         setTimeout(() => {
             switch(rand){
                 case 1:
-                    this.diceImg='dice-six-faces-one.png';
+                    this.diceImg1='dice-six-faces-one.png';
                     break;
                 case 2:
-                    this.diceImg='dice-six-faces-two.png';
+                    this.diceImg1='dice-six-faces-two.png';
                     break;
                 case 3:
-                    this.diceImg='dice-six-faces-three.png';
+                    this.diceImg1='dice-six-faces-three.png';
                     break;
                 case 4:
-                    this.diceImg='dice-six-faces-four.png';
+                    this.diceImg1='dice-six-faces-four.png';
                     break;
                 case 5:
-                    this.diceImg='dice-six-faces-five.png';
+                    this.diceImg1='dice-six-faces-five.png';
                     break;
                 case 6:
-                    this.diceImg='dice-six-faces-six.png';
+                    this.diceImg1='dice-six-faces-six.png';
                     break;
             }
             this.switchPlayer(rand);
         }, 1000);
+        }else{
+            rand = Math.floor(Math.random() *(6 - 1 + 1) + 1);
+        this.diceImg2 = 'dice-1-dice.gif';
+        setTimeout(() => {
+            switch(rand){
+                case 1:
+                    this.diceImg2='dice-six-faces-one.png';
+                    break;
+                case 2:
+                    this.diceImg2='dice-six-faces-two.png';
+                    break;
+                case 3:
+                    this.diceImg2='dice-six-faces-three.png';
+                    break;
+                case 4:
+                    this.diceImg2='dice-six-faces-four.png';
+                    break;
+                case 5:
+                    this.diceImg2='dice-six-faces-five.png';
+                    break;
+                case 6:
+                    this.diceImg2='dice-six-faces-six.png';
+                    break;
+            }
+            this.switchPlayer(rand);
+        }, 1000);
+        }
     },
 
+    
     switchPlayer(num){
-
         if(this.isPlayer1GameStarted && this.isPlayer2GameStarted){
             switch(num){
                 case 1:
@@ -144,8 +175,7 @@
                     case 2:
                     case 3:
                     case 4:
-                    case 5:
-                       
+                    case 5:   
                         if(num!==3){this.totalScore2 += num}
                         if(this.totalScore2 >=100){this.isGameFinished = true; this.winnerName='Player 2'; this.rollDiceBtn=true;}
                         
@@ -220,38 +250,43 @@
             </div>
         </div>
         <div class="flex-col" x-bind:class="player2bg">
-            <div class="bg-white mx-60 mt-32 mb-20  px-12 py-8 rounded-md">
-                <h1 class="text-center font-bold text-lg">Total Score</h1> 
-                <h3 class="text-center font-semibold text-lg">Player 2</h3>
-                <h3 class="text-center font-medium text-lg" x-text="totalScore2"></h3>
-            </div>
-            <div class="bg-white mx-60 mt-20 mb-32  px-12 py-8 rounded-md">
-                <h1 class="text-gray-400 text-center font-bold text-lg">CURRENT SCORE</h1> 
-                <h1 class="text-center font-medium text-lg" x-text="currentScore2"></h1>
-            </div>
-            <div>
-
-            <img
-            class="z-1 border rounded-md absolute left-[890px] top-[480px] bg-white w-24"
-            :src="'./assets/'+diceImg"
-            alt=""
-            />
-        </div>
+                <div class="bg-white mx-60 mt-32 mb-20  px-12 py-8 rounded-md">
+                    <h1 class="text-center font-bold text-lg">Total Score</h1> 
+                    <h3 class="text-center font-semibold text-lg">Player 2</h3>
+                    <h3 class="text-center font-medium text-lg" x-text="totalScore2"></h3>
+                </div>
+                <div class="bg-white mx-60 mt-20 mb-32  px-12 py-8 rounded-md">
+                    <h1 class="text-gray-400 text-center font-bold text-lg">CURRENT SCORE</h1> 
+                    <h1 class="text-center font-medium text-lg" x-text="currentScore2"></h1>
+                </div>
+                <div>
+                    <img
+                      class="border rounded-md absolute left-[1000px] top-[480px] bg-white w-24"
+                      :src="'./assets/'+diceImg1"
+                      alt=""
+                    />
+                    <img
+                      class="border rounded-md absolute left-[830px] top-[480px] bg-white w-24"
+                      :src="'./assets/'+diceImg2"
+                      alt=""
+                    />
+                  </div>
             
-        <button
-          type="button"
-          @click="rollDice()"
-          x-bind:disabled="rollDiceBtn"
-          class="bg-green-300 text-green px-4 py-2 z-1 border rounded-md absolute left-[868px] top-[600px] opacity-70 text-lg font-medium text-center"
-        >
-          Roll Dice
+            <button
+            type="button"
+            @click="rollDice()"
+            x-bind:disabled="rollDiceBtn"
+            class="bg-green-300 text-green px-4 py-2 z-1 border rounded-md absolute left-[868px] top-[600px] opacity-70 text-lg font-medium text-center"
+            >
+            Roll Dice
         </button>
             <div 
-            x-show="isGameFinished"
-            class="bg-green-300 text-green px-4 py-2 z-1 border rounded-md absolute left-[818px] top-[660px] opacity-70 text-lg font-medium text-center"
-            x-text="'Winner is '+winnerName"
-            ></div>
-        </div>
+                x-show="isGameFinished"
+                class="bg-green-300 text-green px-4 py-2 z-1 border rounded-md absolute left-[818px] top-[660px] opacity-70 text-lg font-medium text-center"
+                x-text="'Winner is '+winnerName"
+                >
+            </div>
+    </div>
    </div> 
 </body>
 </html>
